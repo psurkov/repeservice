@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${postgresqlserver.host}:${postgresqlserver.port}/${postgresqlserver.db.name}
+    username: ${postgresqlserver.db.username}
+    password: ${postgresqlserver.db.password}
+    driverClassName: org.postgresql.Driver
+
+logging:
+  level:
+    org:
+      springframework: info
+      jdbc:
+        datasource:
+          DataSourceTransactionManager: DEBUG
+      jetbrains:
+        exposed:
+          SpringTransactionManager: DEBUG
