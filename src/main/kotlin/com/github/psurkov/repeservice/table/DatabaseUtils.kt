@@ -8,11 +8,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 sealed class AppTable : Table()
 
-val tables = AppTable::class.sealedSubclasses
-    .map { it.objectInstance!! }
-    .toTypedArray()
+val tables = arrayOf(StudentTable, StudyGroupParticipantTable, StudyGroupTable, TutorTable)
 
-fun clearDatabaseAndCreateEmpty() {
+fun initDatabase() {
     transaction {
         SchemaUtils.drop(*tables)
         SchemaUtils.create(*tables)

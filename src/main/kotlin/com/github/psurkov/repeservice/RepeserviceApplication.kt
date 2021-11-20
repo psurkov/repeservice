@@ -1,6 +1,6 @@
 package com.github.psurkov.repeservice
 
-import com.github.psurkov.repeservice.table.clearDatabaseAndCreateEmpty
+import com.github.psurkov.repeservice.table.initDatabase
 import org.jetbrains.exposed.spring.SpringTransactionManager
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.event.ApplicationReadyEvent
@@ -21,7 +21,7 @@ class RepeserviceApplication {
 @Component
 class ApplicationStartup : ApplicationListener<ApplicationReadyEvent> {
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
-        clearDatabaseAndCreateEmpty()
+        initDatabase()
     }
 }
 
