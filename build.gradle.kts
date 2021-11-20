@@ -27,18 +27,18 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.6.0")
     implementation("org.springframework.boot:spring-boot-starter-webflux:2.6.0")
-    implementation("org.springframework.boot:spring-boot-starter-security:2.6.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.6.0")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.jetbrains.exposed:exposed-core:0.36.2")
     implementation("org.jetbrains.exposed:spring-transaction:0.36.2")
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.5.12")
+    implementation("org.springdoc:springdoc-openapi-ui:1.5.12")
     developmentOnly("org.springframework.boot:spring-boot-devtools:2.6.0")
     runtimeOnly("org.postgresql:postgresql:42.3.1")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.6.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.springframework.security:spring-security-test")
 }
 
 tasks.withType<KotlinCompile> {

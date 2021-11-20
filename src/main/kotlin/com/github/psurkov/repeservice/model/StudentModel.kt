@@ -1,7 +1,7 @@
 package com.github.psurkov.repeservice.model
 
-data class Tutor(
+data class StudentModel(
     override val id: Long,
     override val username: String,
     override val password: String,
-) : User
+) : UserModel

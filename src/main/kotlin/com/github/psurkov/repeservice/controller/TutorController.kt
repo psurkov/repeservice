@@ -1,17 +1,22 @@
 package com.github.psurkov.repeservice.controller
 
-import com.github.psurkov.repeservice.model.Tutor
-import com.github.psurkov.repeservice.repository.TutorRepository
+import com.github.psurkov.repeservice.model.CreateTutorModel
+import com.github.psurkov.repeservice.model.TutorModel
+import com.github.psurkov.repeservice.service.TutorService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class TutorController(private val tutorRepository: TutorRepository) {
+class TutorController(private val tutorService: TutorService) {
 
-    @GetMapping("/tutor/all")
-    suspend fun findAll(): ResponseEntity<List<Tutor>> {
-        return ResponseEntity(tutorRepository.findAll(), HttpStatus.OK)
+    @PostMapping("/tutor/create")
+    suspend fun createNewTutor(
+        @RequestBody createTutorModel: CreateTutorModel
+    ): ResponseEntity<TutorModel> {
+        val tutorModel = tutorService.createNew(createTutorModel)
+        return ResponseEntity(tutorModel, HttpStatus.OK)
     }
 }
