@@ -47,4 +47,21 @@ class StudyGroupService(
         }
         return inviteRepository.insertPendingInvite(studyGroupId, studentId)
     }
+
+    @Throws(
+        NotFoundStudyGroup::class,
+        NotFoundStudent::class,
+        StudentAbsentInStudyGroup::class,
+    )
+    suspend fun exclude(
+        studyGroupId: Long,
+        studentId: Long,
+    ) {
+        studentRepository.findById(studentId) ?: throw NotFoundStudent()
+        val studyGroup = studyGroupRepository.findById(studyGroupId) ?: throw NotFoundStudyGroup()
+        if (!studyGroup.participantIds.contains(studentId)) {
+            throw StudentAbsentInStudyGroup()
+        }
+        studyGroupRepository.deleteParticipant(studyGroupId, studentId)
+    }
 }

@@ -1,13 +1,11 @@
 package com.github.psurkov.repeservice.service
 
-import com.github.psurkov.repeservice.exception.AlreadyPendingInvite
-import com.github.psurkov.repeservice.exception.NotFoundStudent
-import com.github.psurkov.repeservice.exception.NotFoundStudyGroup
-import com.github.psurkov.repeservice.exception.StudentAlreadyInStudyGroup
+import com.github.psurkov.repeservice.exception.*
 import com.github.psurkov.repeservice.model.invite.InviteStatus
 import com.github.psurkov.repeservice.model.studygroup.CreateStudyGroupModel
 import com.github.psurkov.repeservice.model.user.CreateStudentModel
 import com.github.psurkov.repeservice.model.user.CreateTutorModel
+import com.github.psurkov.repeservice.repository.StudyGroupRepository
 import com.github.psurkov.repeservice.table.InviteTable
 import com.github.psurkov.repeservice.table.StudyGroupTable
 import com.github.psurkov.repeservice.table.dbQuery
@@ -22,6 +20,9 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class StudyGroupServiceTest {
+
+    @Autowired
+    private lateinit var studyGroupRepository: StudyGroupRepository
 
     @Autowired
     private lateinit var tutorService: TutorService
@@ -116,6 +117,54 @@ class StudyGroupServiceTest {
         Assertions.assertThrows(StudentAlreadyInStudyGroup::class.java) {
             runBlocking {
                 studyGroupService.invite(studyGroup.id, student.id)
+            }
+        }
+    }
+
+    @Test
+    fun testExcludeInvite() = runBlocking {
+        val tutor = tutorService.createNew(CreateTutorModel("tutor", "12345"))
+        val student = studentService.createNew(CreateStudentModel("student", "qwerty"))
+        val studyGroup = studyGroupService.createNewStudyGroup(CreateStudyGroupModel(tutor.id, "group"))
+        val invite = studyGroupService.invite(studyGroup.id, student.id)
+        studentService.acceptInvite(invite.id)
+        studyGroupService.exclude(studyGroup.id, student.id)
+        val updatedStudyGroup = studyGroupRepository.findById(studyGroup.id)!!
+        Assertions.assertEquals(emptyList<Long>(), updatedStudyGroup.participantIds)
+    }
+
+    @Test
+    fun testExcludeNotFoundStudent(): Unit = runBlocking {
+        val tutor = tutorService.createNew(CreateTutorModel("tutor", "12345"))
+        val studyGroup = studyGroupService.createNewStudyGroup(CreateStudyGroupModel(tutor.id, "group"))
+
+        Assertions.assertThrows(NotFoundStudent::class.java) {
+            runBlocking {
+                studyGroupService.exclude(studyGroup.id, -1)
+            }
+        }
+    }
+
+    @Test
+    fun testExcludeNotFoundStudyGroup(): Unit = runBlocking {
+        val student = studentService.createNew(CreateStudentModel("student", "qwerty"))
+
+        Assertions.assertThrows(NotFoundStudyGroup::class.java) {
+            runBlocking {
+                studyGroupService.exclude(-1, student.id)
+            }
+        }
+    }
+
+    @Test
+    fun testExcludeStudentAbsentInStudyGroup(): Unit = runBlocking {
+        val tutor = tutorService.createNew(CreateTutorModel("tutor", "12345"))
+        val student = studentService.createNew(CreateStudentModel("student", "qwerty"))
+        val studyGroup = studyGroupService.createNewStudyGroup(CreateStudyGroupModel(tutor.id, "group"))
+
+        Assertions.assertThrows(StudentAbsentInStudyGroup::class.java) {
+            runBlocking {
+                studyGroupService.exclude(studyGroup.id, student.id)
             }
         }
     }

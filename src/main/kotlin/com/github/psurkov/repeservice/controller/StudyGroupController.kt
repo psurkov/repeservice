@@ -32,4 +32,13 @@ class StudyGroupController(
         val invite = studyGroupService.invite(studentId, studentId)
         return ResponseEntity(invite, HttpStatus.OK)
     }
+
+    @PostMapping("/exclude/")
+    suspend fun exclude(
+        @RequestParam studyGroupId: Long,
+        @RequestParam studentId: Long,
+    ): ResponseEntity<Void> {
+        studyGroupService.exclude(studentId, studentId)
+        return ResponseEntity(null, HttpStatus.OK)
+    }
 }

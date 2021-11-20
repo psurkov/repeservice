@@ -26,3 +26,6 @@ class StudentAlreadyInStudyGroup : Exception()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 class AlreadyPendingInvite : Exception()
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class StudentAbsentInStudyGroup : Exception()
