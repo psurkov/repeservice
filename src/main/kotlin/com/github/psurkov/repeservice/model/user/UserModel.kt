@@ -1,4 +1,4 @@
-package com.github.psurkov.repeservice.model
+package com.github.psurkov.repeservice.model.user
 
 sealed interface UserModel {
     val id: Long

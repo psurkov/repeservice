@@ -1,7 +1,7 @@
 package com.github.psurkov.repeservice.controller
 
-import com.github.psurkov.repeservice.model.CreateTutorModel
-import com.github.psurkov.repeservice.model.TutorModel
+import com.github.psurkov.repeservice.model.user.CreateTutorModel
+import com.github.psurkov.repeservice.model.user.TutorModel
 import com.github.psurkov.repeservice.service.TutorService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

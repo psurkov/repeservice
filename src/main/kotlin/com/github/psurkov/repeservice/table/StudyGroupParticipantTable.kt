@@ -1,6 +1,6 @@
 package com.github.psurkov.repeservice.table
 
-object StudyGroupTutorParticipantTable : AppTable() {
+object StudyGroupParticipantTable : AppTable() {
     val studyGroupId = long("studyGroupId").references(StudyGroupTable.id)
-    val tutorId = long("tutorId").references(TutorTable.id)
+    val studentId = long("studentId").references(StudentTable.id)
 }
