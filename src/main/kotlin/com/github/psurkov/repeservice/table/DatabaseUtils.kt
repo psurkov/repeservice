@@ -6,12 +6,11 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.transactions.transaction
 
-val tables = arrayOf<Table>(Tutors) // todo use reflekt
+sealed class AppTable : Table()
 
-suspend fun <T> dbQuery(block: () -> T): T =
-    withContext(Dispatchers.IO) {
-        transaction { block() }
-    }
+val tables = AppTable::class.sealedSubclasses
+    .map { it.objectInstance!! }
+    .toTypedArray()
 
 fun clearDatabaseAndCreateEmpty() {
     transaction {
@@ -19,3 +18,9 @@ fun clearDatabaseAndCreateEmpty() {
         SchemaUtils.create(*tables)
     }
 }
+
+suspend fun <T> dbQuery(block: () -> T): T =
+    withContext(Dispatchers.IO) {
+        transaction { block() }
+    }
+

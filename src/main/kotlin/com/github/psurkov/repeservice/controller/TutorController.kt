@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class TutorController(private val tutorRepository: TutorRepository) {
 
-    @GetMapping("/")
+    @GetMapping("/tutor/all")
     suspend fun findAll(): ResponseEntity<List<Tutor>> {
         return ResponseEntity(tutorRepository.findAll(), HttpStatus.OK)
     }
