@@ -2,10 +2,10 @@ package com.github.psurkov.repeservice.repository
 
 import com.github.psurkov.repeservice.model.studygroup.CreateStudyGroupModel
 import com.github.psurkov.repeservice.model.studygroup.StudyGroupModel
-import com.github.psurkov.repeservice.table.*
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import com.github.psurkov.repeservice.table.StudyGroupParticipantTable
+import com.github.psurkov.repeservice.table.StudyGroupTable
+import com.github.psurkov.repeservice.table.dbQuery
+import org.jetbrains.exposed.sql.*
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
@@ -28,7 +28,6 @@ class StudyGroupRepository {
                 val participants = StudyGroupParticipantTable
                     .select { StudyGroupParticipantTable.studyGroupId eq id }
                     .map { participant -> participant[StudyGroupParticipantTable.studentId] }
-                    .toList()
                 it.fromRow(participants)
             }
     }
@@ -38,5 +37,19 @@ class StudyGroupRepository {
             it[ownerTutorId] = createStudyGroupModel.ownerTutorId
             it[name] = createStudyGroupModel.name
         }.resultedValues!!.first().fromRow(emptyList())
+    }
+
+    fun addParticipant(studyGroupId: Long, studentId: Long) {
+        StudyGroupParticipantTable.insert {
+            it[StudyGroupParticipantTable.studyGroupId] = studyGroupId
+            it[StudyGroupParticipantTable.studentId] = studentId
+        }
+    }
+
+    fun deleteParticipant(studyGroupId: Long, studentId: Long) {
+        StudyGroupParticipantTable.deleteWhere {
+            (StudyGroupParticipantTable.studyGroupId eq studyGroupId) and
+                    (StudyGroupParticipantTable.studentId eq studentId)
+        }
     }
 }

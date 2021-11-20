@@ -24,7 +24,7 @@ class TutorServiceTest {
     }
 
     @Test
-    fun createNew() = runBlocking {
+    fun testCreateNew() = runBlocking {
         val tutor = tutorService.createNew(CreateTutorModel("test username", "12345"))
         Assertions.assertEquals("test username", tutor.username)
         Assertions.assertEquals("12345", tutor.password)

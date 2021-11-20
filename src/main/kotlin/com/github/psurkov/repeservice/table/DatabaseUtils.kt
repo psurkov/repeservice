@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 sealed class AppTable : Table()
 
-val tables = arrayOf(StudentTable, StudyGroupParticipantTable, StudyGroupTable, TutorTable)
+val tables = arrayOf(StudentTable, StudyGroupParticipantTable, StudyGroupTable, TutorTable, InviteTable)
 
 fun initDatabase() {
     transaction {

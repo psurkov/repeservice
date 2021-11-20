@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 @Transactional(isolation = Isolation.SERIALIZABLE)
 class StudentRepository {
-    private fun ResultRow.fromRow() =
+    private fun ResultRow.fromRow(): StudentModel =
         StudentModel(
             this[StudentTable.id],
             this[StudentTable.username],
