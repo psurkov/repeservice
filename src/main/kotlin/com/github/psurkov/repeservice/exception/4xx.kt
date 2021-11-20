@@ -7,4 +7,10 @@ import org.springframework.web.bind.annotation.ResponseStatus
 class NotFoundTutor : Exception()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class NotFoundStudent : Exception()
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 class AlreadyExistsTutor : Exception()
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class AlreadyExistsStudent : Exception()
