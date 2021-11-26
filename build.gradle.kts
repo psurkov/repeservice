@@ -34,6 +34,8 @@ dependencies {
     implementation("org.jetbrains.exposed:spring-transaction:0.36.2")
     implementation("org.springdoc:springdoc-openapi-kotlin:1.5.12")
     implementation("org.springdoc:springdoc-openapi-ui:1.5.12")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.1")
+    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:0.36.2")
 //    developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.6.0")

@@ -15,6 +15,12 @@ class NotFoundStudyGroup : Exception()
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 class NotFoundInvite : Exception()
 
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class NotFoundEvent : Exception()
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class NotFoundEventTime : Exception()
+
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 class AlreadyExistsTutor : Exception()
 
