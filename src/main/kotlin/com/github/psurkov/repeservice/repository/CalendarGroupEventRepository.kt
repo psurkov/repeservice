@@ -12,6 +12,7 @@ interface CalendarGroupEventRepository {
     suspend fun deleteGroupEvent(groupEventId: Long)
 
     suspend fun findGroupEventTimeById(groupEventTimeId: Long): GroupEventTimeModel?
+    suspend fun findEventTimesOfEvent(eventId: Long): List<GroupEventTimeModel>
     suspend fun insertGroupEventTime(createGroupEventTimeModel: CreateGroupEventTimeModel): GroupEventTimeModel
     suspend fun deleteGroupEventTime(groupEventTimeId: Long)
 }

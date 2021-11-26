@@ -5,6 +5,7 @@ import com.github.psurkov.repeservice.model.calendar.groupevent.CreateGroupEvent
 import com.github.psurkov.repeservice.model.calendar.groupevent.GroupEventModel
 import com.github.psurkov.repeservice.model.calendar.groupevent.GroupEventTimeModel
 import com.github.psurkov.repeservice.service.CalendarService
+import kotlinx.datetime.LocalDateTime
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -50,5 +51,15 @@ class CalendarController(private val calendarService: CalendarService) {
     ): ResponseEntity<Unit> {
         calendarService.deleteGroupEvent(eventId)
         return ResponseEntity(null, HttpStatus.OK)
+    }
+
+    @GetMapping("/calendar/eventime")
+    suspend fun findStartMomentsOfEventBetween(
+        @RequestParam eventId: Long,
+        @RequestBody from: LocalDateTime,
+        @RequestBody to: LocalDateTime,
+    ): ResponseEntity<List<LocalDateTime>> {
+        val moments = calendarService.findStartMomentsOfEventBetween(eventId, from, to)
+        return ResponseEntity(moments, HttpStatus.CREATED)
     }
 }

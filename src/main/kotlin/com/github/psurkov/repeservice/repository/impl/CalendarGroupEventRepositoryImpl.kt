@@ -77,6 +77,12 @@ class CalendarGroupEventRepositoryImpl : CalendarGroupEventRepository {
         }.singleOrNull()?.groupEventTimeFromRow()
     }
 
+    override suspend fun findEventTimesOfEvent(eventId: Long): List<GroupEventTimeModel> = dbQuery {
+        GroupEventTimeTable.select { GroupEventTimeTable.eventId eq eventId }
+            .map { it.groupEventTimeFromRow() }
+            .toList()
+    }
+
     override suspend fun insertGroupEventTime(createGroupEventTimeModel: CreateGroupEventTimeModel) = dbQuery {
         with(GroupEventTimeTable) {
             insert {

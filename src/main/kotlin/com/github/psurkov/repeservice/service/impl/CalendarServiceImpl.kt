@@ -3,6 +3,7 @@ package com.github.psurkov.repeservice.service.impl
 import com.github.psurkov.repeservice.exception.NotFoundEvent
 import com.github.psurkov.repeservice.exception.NotFoundEventTime
 import com.github.psurkov.repeservice.exception.NotFoundStudyGroup
+import com.github.psurkov.repeservice.model.calendar.RepeatType
 import com.github.psurkov.repeservice.model.calendar.groupevent.CreateGroupEventModel
 import com.github.psurkov.repeservice.model.calendar.groupevent.CreateGroupEventTimeModel
 import com.github.psurkov.repeservice.model.calendar.groupevent.GroupEventModel
@@ -10,9 +11,11 @@ import com.github.psurkov.repeservice.model.calendar.groupevent.GroupEventTimeMo
 import com.github.psurkov.repeservice.repository.CalendarGroupEventRepository
 import com.github.psurkov.repeservice.repository.StudyGroupRepository
 import com.github.psurkov.repeservice.service.CalendarService
+import kotlinx.datetime.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
+import kotlin.time.Duration.Companion.days
 
 @Service
 @Transactional(isolation = Isolation.SERIALIZABLE)
@@ -45,4 +48,29 @@ class CalendarServiceImpl(
         calendarGroupEventRepository.findGroupEventTimeById(groupEventTimeId) ?: throw NotFoundEventTime()
         calendarGroupEventRepository.deleteGroupEventTime(groupEventTimeId)
     }
+
+    override suspend fun findStartMomentsOfEventBetween(
+        eventId: Long,
+        from: LocalDateTime,
+        to: LocalDateTime
+    ): List<LocalDateTime> = calendarGroupEventRepository.findEventTimesOfEvent(eventId)
+        .flatMap { eventTime ->
+            generateTimeSequence(eventTime)
+                .dropWhile { it < from }
+                .takeWhile { it <= to }
+        }.sorted()
+
+    private fun generateTimeSequence(eventTime: GroupEventTimeModel) = when (eventTime.repeatType) {
+        RepeatType.SINGLE -> sequenceOf(eventTime.startTime)
+        RepeatType.EVERY_DAY -> generateSequence(eventTime.startTime) {
+            it.toInstant(TimeZone.UTC).plus(1.days).toLocalDateTime(TimeZone.UTC)
+        }
+        RepeatType.EVERY_WEEK -> generateSequence(eventTime.startTime) {
+            it.toInstant(TimeZone.UTC).plus(7.days).toLocalDateTime(TimeZone.UTC)
+        }
+        RepeatType.EVERY_MONTH -> generateSequence(eventTime.startTime) {
+            it.toInstant(TimeZone.UTC).plus(1, DateTimeUnit.MONTH, TimeZone.UTC).toLocalDateTime(TimeZone.UTC)
+        }
+    }
+
 }

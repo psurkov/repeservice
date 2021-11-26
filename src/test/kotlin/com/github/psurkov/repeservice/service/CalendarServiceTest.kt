@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 @SpringBootTest
@@ -179,5 +180,47 @@ class CalendarServiceTest {
         with(CalendarGroupEventRepositoryImpl.GroupEventTimeTable) {
             Assertions.assertTrue(dbQuery { selectAll().toList() }.isEmpty())
         }
+    }
+
+    @Test
+    fun testFindStartMomentsOfEventBetween() = runBlocking {
+        val tutor = tutorService.createNew(CreateTutorModel("test username", "12345"))
+        val studyGroup = studyGroupService.createNewStudyGroup(CreateStudyGroupModel(tutor.id, "test name"))
+        val groupEvent = calendarService.createGroupEvent(
+            CreateGroupEventModel(
+                studyGroup.id,
+                "test name",
+                "test description",
+                "test link"
+            )
+        )
+        calendarService.addEventTime(
+            CreateGroupEventTimeModel(
+                groupEvent.eventId,
+                LocalDateTime(2000, 1, 30, 13, 0, 0, 0),
+                10.minutes,
+                RepeatType.EVERY_DAY
+            )
+        )
+        calendarService.addEventTime(
+            CreateGroupEventTimeModel(
+                groupEvent.eventId,
+                LocalDateTime(2000, 2, 20, 3, 30, 10, 0),
+                30.minutes,
+                RepeatType.EVERY_MONTH
+            )
+        )
+        val actual = calendarService.findStartMomentsOfEventBetween(
+            groupEvent.eventId,
+            LocalDateTime(2000, 3, 18, 0, 0, 0, 0),
+            LocalDateTime(2000, 3, 21, 0, 0, 0, 0),
+        )
+        val expected = listOf(
+            LocalDateTime(2000, 3, 18, 13, 0, 0, 0),
+            LocalDateTime(2000, 3, 19, 13, 0, 0, 0),
+            LocalDateTime(2000, 3, 20, 3, 30, 10, 0),
+            LocalDateTime(2000, 3, 20, 13, 0, 0, 0),
+        )
+        Assertions.assertEquals(expected, actual)
     }
 }
