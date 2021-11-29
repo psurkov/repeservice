@@ -17,6 +17,6 @@ class TutorController(private val tutorService: TutorService) {
         @RequestBody createTutorModel: CreateTutorModel
     ): ResponseEntity<TutorModel> {
         val tutorModel = tutorService.createNew(createTutorModel)
-        return ResponseEntity(tutorModel, HttpStatus.OK)
+        return ResponseEntity(tutorModel, HttpStatus.CREATED)
     }
 }

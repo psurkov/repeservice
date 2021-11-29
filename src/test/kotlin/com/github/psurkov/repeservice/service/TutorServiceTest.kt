@@ -1,9 +1,9 @@
 package com.github.psurkov.repeservice.service
 
 import com.github.psurkov.repeservice.model.user.CreateTutorModel
-import com.github.psurkov.repeservice.table.TutorTable
-import com.github.psurkov.repeservice.table.dbQuery
-import com.github.psurkov.repeservice.table.initDatabase
+import com.github.psurkov.repeservice.repository.impl.TutorRepositoryImpl.TutorTable
+import com.github.psurkov.repeservice.repository.impl.dbQuery
+import com.github.psurkov.repeservice.repository.impl.initDatabase
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.select
 import org.junit.jupiter.api.Assertions

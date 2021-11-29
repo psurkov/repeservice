@@ -16,29 +16,45 @@ class StudyGroupController(
     private val studyGroupService: StudyGroupService
 ) {
 
-    @PostMapping("/create/")
+    @PostMapping("studygroup/create/")
     suspend fun createNewStudyGroup(
         @RequestBody createStudyGroupModel: CreateStudyGroupModel
     ): ResponseEntity<StudyGroupModel> {
         val studyGroup = studyGroupService.createNewStudyGroup(createStudyGroupModel)
-        return ResponseEntity(studyGroup, HttpStatus.OK)
+        return ResponseEntity(studyGroup, HttpStatus.CREATED)
     }
 
-    @PostMapping("/invite/")
+    @PostMapping("studygroup/invite/")
     suspend fun invite(
         @RequestParam studyGroupId: Long,
         @RequestParam studentId: Long,
     ): ResponseEntity<InviteModel> {
-        val invite = studyGroupService.invite(studentId, studentId)
+        val invite = studyGroupService.inviteToStudyGroup(studentId, studentId)
         return ResponseEntity(invite, HttpStatus.OK)
     }
 
-    @PostMapping("/exclude/")
+    @PostMapping("studygroup/exclude/")
     suspend fun exclude(
         @RequestParam studyGroupId: Long,
         @RequestParam studentId: Long,
     ): ResponseEntity<Void> {
-        studyGroupService.exclude(studentId, studentId)
+        studyGroupService.excludeFromStudyGroup(studentId, studentId)
+        return ResponseEntity(null, HttpStatus.OK)
+    }
+
+    @PostMapping("studygroup/invite/accept")
+    suspend fun acceptInvite(
+        @RequestParam inviteId: Long,
+    ): ResponseEntity<Void> {
+        studyGroupService.acceptInviteToStudyGroup(inviteId)
+        return ResponseEntity(null, HttpStatus.OK)
+    }
+
+    @PostMapping("studygroup/invite/reject")
+    suspend fun rejectInvite(
+        @RequestParam inviteId: Long,
+    ): ResponseEntity<Void> {
+        studyGroupService.rejectInviteToStudyGroup(inviteId)
         return ResponseEntity(null, HttpStatus.OK)
     }
 }

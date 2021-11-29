@@ -1,6 +1,6 @@
 package com.github.psurkov.repeservice
 
-import com.github.psurkov.repeservice.table.initDatabase
+import com.github.psurkov.repeservice.repository.impl.initDatabase
 import org.jetbrains.exposed.spring.SpringTransactionManager
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.event.ApplicationReadyEvent

@@ -3,16 +3,16 @@ package com.github.psurkov.repeservice.exception
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 class NotFoundTutor : Exception()
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 class NotFoundStudent : Exception()
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 class NotFoundStudyGroup : Exception()
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 class NotFoundInvite : Exception()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)

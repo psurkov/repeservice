@@ -1,4 +1,4 @@
-package com.github.psurkov.repeservice.table
+package com.github.psurkov.repeservice.repository.impl
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -8,7 +8,13 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 sealed class AppTable : Table()
 
-val tables = arrayOf(StudentTable, StudyGroupParticipantTable, StudyGroupTable, TutorTable, InviteTable)
+val tables = arrayOf(
+    StudentRepositoryImpl.StudentTable,
+    StudyGroupRepositoryImpl.StudyGroupParticipantTable,
+    StudyGroupRepositoryImpl.StudyGroupTable,
+    TutorRepositoryImpl.TutorTable,
+    InviteRepositoryImpl.InviteTable
+)
 
 fun initDatabase() {
     transaction {
