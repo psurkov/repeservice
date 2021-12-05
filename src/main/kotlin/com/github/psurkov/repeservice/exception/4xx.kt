@@ -4,34 +4,46 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-class NotFoundTutor : Exception()
+class NotFoundTutor : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-class NotFoundStudent : Exception()
+class NotFoundStudent : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-class NotFoundStudyGroup : Exception()
+class NotFoundStudyGroup : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-class NotFoundInvite : Exception()
+class NotFoundInvite : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-class NotFoundEvent : Exception()
+class NotFoundEvent : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-class NotFoundEventTime : Exception()
+class NotFoundEventTime : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class NotFoundPayment : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class NotFoundBasicPrice : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-class AlreadyExistsTutor : Exception()
+class AlreadyExistsTutor : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-class AlreadyExistsStudent : Exception()
+class AlreadyExistsStudent : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-class StudentAlreadyInStudyGroup : Exception()
+class StudentAlreadyInStudyGroup : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-class AlreadyPendingInvite : Exception()
+class AlreadyPendingInvite : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-class StudentAbsentInStudyGroup : Exception()
+class AlreadyPaid : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class AlreadyExistsBasicPrice : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class StudentAbsentInStudyGroup : RuntimeException()

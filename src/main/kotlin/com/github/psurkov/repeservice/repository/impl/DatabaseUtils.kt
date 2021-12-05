@@ -16,6 +16,8 @@ val tables = arrayOf(
     InviteRepositoryImpl.InviteTable,
     CalendarGroupEventRepositoryImpl.GroupEventTable,
     CalendarGroupEventRepositoryImpl.GroupEventTimeTable,
+    PaymentRepositoryImpl.PaymentTable,
+    BasicPriceRepositoryImpl.BasicPriceTable,
 )
 
 fun initDatabase() {
