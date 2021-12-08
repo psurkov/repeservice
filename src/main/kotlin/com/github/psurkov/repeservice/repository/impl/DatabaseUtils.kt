@@ -13,7 +13,13 @@ val tables = arrayOf(
     StudyGroupRepositoryImpl.StudyGroupParticipantTable,
     StudyGroupRepositoryImpl.StudyGroupTable,
     TutorRepositoryImpl.TutorTable,
-    InviteRepositoryImpl.InviteTable
+    InviteRepositoryImpl.InviteTable,
+    CalendarGroupEventRepositoryImpl.GroupEventTable,
+    CalendarGroupEventRepositoryImpl.GroupEventTimeTable,
+    PaymentRepositoryImpl.PaymentTable,
+    BasicPriceRepositoryImpl.BasicPriceTable,
+    HomeworkRepositoryImpl.HomeworkTable,
+    HomeworkSolutionRepositoryImpl.HomeworkSolutionTable,
 )
 
 fun initDatabase() {
