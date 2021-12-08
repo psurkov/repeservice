@@ -27,6 +27,15 @@ class NotFoundPayment : RuntimeException()
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 class NotFoundBasicPrice : RuntimeException()
 
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class NotFoundHomework : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class NotFoundTaskFile : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class NotFoundTaskSolutionFile : RuntimeException()
+
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 class AlreadyExistsTutor : RuntimeException()
 
@@ -46,4 +55,10 @@ class AlreadyPaid : RuntimeException()
 class AlreadyExistsBasicPrice : RuntimeException()
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class AlreadyExistsHomeworkSolution : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 class StudentAbsentInStudyGroup : RuntimeException()
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class SolutionAfterDeadline : RuntimeException()

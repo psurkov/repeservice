@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.6.0"
     kotlin("plugin.spring") version "1.6.0"
     id("org.springframework.experimental.aot") version "0.11.0-RC1"
+    kotlin("plugin.serialization") version "1.5.31"
 }
 
 group = "com.github.psurkov"
@@ -36,6 +37,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:1.5.12")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.1")
     implementation("org.jetbrains.exposed:exposed-kotlin-datetime:0.36.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 //    developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.6.0")
